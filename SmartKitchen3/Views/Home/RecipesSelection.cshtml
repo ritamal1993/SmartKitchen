@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SmartKitchen3.ViewModel.ThumbnailBoxViewModel>
+  
+
+@using (Html.BeginForm("RecipesSelection", "Home", FormMethod.Get))
+{
+    
+    
+    <link rel="stylesheet" href="~/Content/Design.css">
+
+
+
+
+    <br />
+
+  <div class="row">
+        <div class="pull-right" style="padding-right:15px;">
+            <button type="submit" value="Search" class="btn btn-sm btn-primary">
+                <span class="glyhphicon glyphicon-search"></span>&nbsp; Search
+
+            </button>
+        </div>
+        <div class="pull-right">
+            @Html.Editor("search", new { htmlattributes = new { @class = "form-control input-sm" } })
+        </div>
+    </div>
+
+    <br />
+}
+<div class="row">
+    @foreach (var area in Model)
+    {
+
+        @Html.Partial("_ThumbnailAreaPartial", area);
+    }
+</div>
+
+@*Report event*@
+<script>
+    $(document).ready(function(){
+        $('.recipe_link').click(function () {
+            var id = this.attributes.getNamedItem("id").nodeValue;
+            console.log(this);
+            console.log("id: " + id);
+
+            $.ajax({
+                url: '@Url.Action("RecipeAction","ReportEvent")',
+                type: "GET",
+                data: {EventType: 0, RecipeIdentifier: id},
+                success: function (data) {
+                    console.log("reported recipe click event! id: " + id);
+                }
+        })
+    });
+});
+</script>
+
+

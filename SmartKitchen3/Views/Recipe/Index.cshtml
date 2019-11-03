@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SmartKitchen3.Models.Recipe>
+@using SmartKitchen3.Models
+@{
+    ViewBag.Title = "Index";
+}
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/SearchTable.js"></script>
+}
+
+<link rel="stylesheet" href="~/Content/Design.css" />
+<h2>Manage Recipes</h2>
+<p>
+    @Html.Partial("_CreateButtonPartial")
+</p>
+<input class="form-control" id="searchable" type="text" placeholder="Search..">
+
+<br />
+<table class="table table-condensed" table-hover>
+    <tr class="table-header">
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+
+        <th></th>
+        <th></th>
+
+
+
+
+    <tbody id="search-table">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+               
+                <td>
+                    @Html.Partial("_TableButtonPartial", new IndividualButtonPartial { RecipeId = item.RecipeId })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

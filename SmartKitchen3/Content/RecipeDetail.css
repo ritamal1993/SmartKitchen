@@ -1,0 +1,14 @@
+﻿.image-recipe {
+    padding-top: 50px;
+    border-right:4px solid #b1b1b1;
+}
+
+.content-recipe-main{
+    padding-top:30px;
+    text-align:justify;
+
+}
+
+.contet-recipe-title-category{
+    border-bottom:1px solid #b1b1b1;
+}

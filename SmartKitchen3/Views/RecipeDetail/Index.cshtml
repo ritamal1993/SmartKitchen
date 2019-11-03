@@ -1,0 +1,51 @@
+﻿@model SmartKitchen3.ViewModel.Recipeviewmodel_1_
+
+@{
+    ViewBag.Title = "Index";
+}
+<br /><br />
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+@Html.AntiForgeryToken()
+<div class="row">
+    @*Recipe Image*@
+    <div class="col-sm-3 col-xs-4 image-recipe">
+        <img class="tumbnail-img" src="@Model.ImageUrl" alt="" style="width:100% ; height:auto;" />
+    </div>
+
+
+
+    @*Recipe Title And Insstructions*@
+    <div class="col-sm-6 col-xs-8 content-recipe-main">
+
+        <div class="contet-recipe-title-category">
+            <link rel="stylesheet" href="~/Content/Design.css" />
+            <h2><b>@Model.Title</b></h2>
+            <h5>Category: &nbsp; @Model.Category.CategoryName &nbsp;&nbsp; | &nbsp;&nbsp; Calories: &nbsp; @Model.Calories</h5>
+        </div>
+
+        <div>
+            <br />
+            <br />
+            <span>@Html.Raw(Model.Instructions)</span>
+        </div>
+        <br />
+        <html>
+        <body>
+
+            <video width="320" height="240" controls>
+                <source src="@Model.VideoUrl" type="video/mp4">
+              
+                Your browser does not support the video tag.
+            </video>
+
+        </body>
+        </html>
+        <br />
+
+        <br /><br />
+
+    </div>
+    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+</div>
+

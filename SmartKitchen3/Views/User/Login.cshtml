@@ -1,0 +1,128 @@
+﻿@model SmartKitchen3.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=75279589699&autoLogAppEvents=1"></script>
+
+
+<script>
+    function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+        console.log(response);                   // The current login status of the person.
+        if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+            storeAccess();
+        }
+    }
+    function checkLoginState() {               // Called when a person is finished with the Login Button.
+        FB.getLoginStatus(function (response) {   // See the onlogin handler
+            statusChangeCallback(response);
+        });
+    }
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '470093187176497',
+            cookie: true,                     // Enable cookies to allow the server to access the session.
+            xfbml: true,                     // Parse social plugins on this webpage.
+            version: 'v4.0'           // Use this Graph API version for this call.
+        });
+    };
+    (function (d, s, id) {                      // Load the SDK asynchronously
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    function storeAccess() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+        FB.api('/me', { locale: 'en_US', fields: 'name, email' }, function (response) {
+            console.log('Successful login for: ' + response.name + '. Email: ' + response.email);
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    console.log("Successful callback from FacebookLogin");
+                    console.log(xmlhttp);
+                    window.location = xmlhttp.response.redirectToUrl;
+
+                } else if (xmlhttp.readyState == 4 && xmlhttp.status != 200) {
+                    console.log("this.readyState == 4 && this.status == 200");
+                    console.log('change div');
+                    $('#login-alert strong').text("Could not find a Kitchen that is assosiate with your Facebook account. Please register a new Smart Kitchen.");
+                }
+            };
+            xmlhttp.open("GET", '@Url.Action("FacebookLogin","User")', true);
+            xmlhttp.responseType = 'json';
+            xmlhttp.setRequestHeader("sk_username", response.email)
+            xmlhttp.send();
+        });
+    }
+    //function setCookie(cname, cvalue, exhours) {
+    //    var d = new Date();
+    //    d.setTime(d.getTime() + (exhours*60*60*1000));
+    //    var expires = "expires="+ d.toUTCString();
+    //    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    //}
+</script>
+
+<div class="alert alert-warning alert-dismissible" id="login-alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>@ViewBag.Error</strong>
+</div>
+
+<div class="panel panel-default">
+    <div class="" id="accordion">
+        <br />
+
+        <div class="card">
+            <div class="card-header text-center">
+                <a class="card-link" href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover" data-trigger="focus">
+                    <div onlogin="checkLoginState();" class="fb-login-button" data-widtstatich="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true" data-onlogin="" data-scope="public_profile,email"></div>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="card">
+            <div class="card-header text-center">
+                <label type="button" data-toggle="collapse" data-target="#collapseTwo" class="btn btn-default"> SIGN IN WITH EMAIL</label>
+            </div>
+            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                <div class="card-body card-center" id="login-partial">
+                    <br />
+                    <div>
+                        <form action="Login" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="LOG IN" class="btn btn-sm btn-success" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        @*<div class="card">
+                <div class="card-header">
+                    <label type="button" data-toggle="collapse" data-target="#collapseThree" class="btn btn-default">REGISTER NEW KITCHEN</label>
+                </div>
+                <div id="collapseThree" class="collapse" data-parent="#accordion">
+                    <div class="card-body" id="kitchen-registration-partial">
+                        <div id="partial">
+                            @await Html.PartialAsync("KitchenRegistration")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />*@
+    </div>
+</div>

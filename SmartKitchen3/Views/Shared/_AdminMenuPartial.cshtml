@@ -1,0 +1,40 @@
+﻿
+
+
+<li class="dropdown" data-admin-menu>
+    <a href="#">
+        Options
+        <span class="glyphicon glyphicon-circle-arrow-down">
+
+        </span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="divider"></li>
+        <li><a href="/ManageUsers">&nbsp;&nbsp;Manage Users</a></li>
+        <li><a href="/ManageKitchens">&nbsp;&nbsp;Manage Kitchens</a></li>
+        <li class="divider"></li>
+        <li><a href="/Recipe">&nbsp;&nbsp;Manage Recipes</a></li>
+        <li><a href="/Category">&nbsp;&nbsp;Manage Categories</a></li>
+        <li class="divider"></li>
+        <li><a href="/Analyze">&nbsp;&nbsp;Analyze</a></li>
+        <li class="divider"></li>
+
+    </ul>
+
+    <script>
+    $(document).ready(function () {
+        $(".dropdown-admin").hide();
+        $.ajax({
+            url: '@Url.Action("AddAdminBar", "User")',
+            dataType: "json",
+            async: true,
+            success: function (data) {
+                console.log("Admin bar?" + data);
+                if (data.Admin == "1")
+                    $(".dropdown-admin").show();
+            }
+        });
+    });
+    </script>
+    
+</li>

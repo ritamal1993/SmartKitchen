@@ -1,0 +1,64 @@
+﻿<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<div class="row">
+    <div class="col" id="bubble-graph-partial">
+        @Html.Partial("BubbleGraph")
+    </div>
+    <div class="col" id="line-graph-partial">
+        @Html.Partial("LineGraph")
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("BubbleGraphData","Analyze")',
+            dataType: "text",
+            async: false,
+            success: function (data) {
+
+                console.log(data);
+
+                draw_bubble_chart(data);
+            },
+            error: function(request, status, error) {
+
+                var val = request.responseText;
+                console.log(val);
+                console.log("ajax1 error: " + status + "    " + error);
+            },
+            complete: function () {
+                console.log("ajax1 completed");
+            },
+            timeout: 3000
+        })
+
+
+        $.ajax({
+            url: '@Url.Action("LineGraphData","Analyze")',
+            dataType: "text",
+            async: false,
+            success: function (data) {
+
+                console.log(data);
+
+                draw_line_graph(data);
+            },
+            error: function(request, status, error) {
+
+                var val = request.responseText;
+                console.log(val);
+                console.log("ajax2 error: " + status + "    " + error);
+            },
+            complete: function () {
+                console.log("ajax2 completed");
+            },
+            timeout: 3000
+        })
+    });
+
+</script>
+
+
+

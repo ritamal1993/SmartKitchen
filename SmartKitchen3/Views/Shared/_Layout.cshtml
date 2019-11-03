@@ -1,0 +1,67 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/smKitchen")
+    @RenderSection("scripts",required:false)
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    <img src="~/Content/images/SKS logo.png" width="140" height="30" align="top">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+
+                    <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                    <li><a href="@Url.Action("RecipesSelection", "Home")">Recipes</a></li>
+
+                    @Html.Partial("_AdminMenuPartial")
+
+
+
+
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("KitchenRegistration", "User")"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="@Url.Action("Login", "User")"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="@Url.Action("Logout", "User")"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial"></partial>
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+</body>
+</html>

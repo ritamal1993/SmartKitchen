@@ -1,0 +1,106 @@
+﻿@model SmartKitchen3.ViewModel.RecipeViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3> Edit Recipe</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Recipe.RecipeId)
+
+<div class="row" style="border:1px solid #bbb9b9;border-radius:5px;">
+    <br />
+    
+    <div class="col-sm-10">
+    
+    
+    
+    <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Recipe.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Recipe.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               @Html.DropDownListFor(model => model.Recipe.CategoryId, new SelectList(Model.Categorys, "CategoryId", "CategoryName"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Recipe.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.Instructions, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Recipe.Instructions, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Recipe.Instructions, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Recipe.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Recipe.ImageUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.VideoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Recipe.VideoUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Recipe.VideoUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.Calories, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Recipe.Calories, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Recipe.Calories, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipe.LastUpdate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Recipe.LastUpdate, "{0:dd/MM/yyyy}",new {  @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.Recipe.LastUpdate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+
+        <div class="col-sm-2">
+            <div>
+
+                <img src="@Model.Recipe.ImageUrl" alt="" style="width:100%;height:auto"/>
+            </div>
+
+        </div>
+        </div>
+        <br/>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+               
+                <input type="submit" value="Save" class="btn btn-sucsses btn-sm" />
+           
+            @Html.Partial("_BackToListButtonPartial")
+            
+            </div>
+        </div>
+    </div>
+}
+
+
